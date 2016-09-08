@@ -44,7 +44,7 @@ public class WeatherListActivity extends AppCompatActivity implements CitiesAdap
     private String mCityIds = "";
     private LoadingView mLoadingView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
+    private Boolean restart = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,14 +64,15 @@ public class WeatherListActivity extends AppCompatActivity implements CitiesAdap
             public void onRefresh() {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mCityIds = "";
-                updateWeather(false);
+                restart = true;
+                updateWeather();
             }
         });
-        updateWeather(false);
+        updateWeather();
 
     }
 
-    private void updateWeather(boolean restart) {
+    private void updateWeather() {
         mLoadingView.showLoadingIndicator();
         LoaderManager.LoaderCallbacks<City> callbacks = new IdCityCallbacks();
         if (restart) {
@@ -136,9 +137,9 @@ public class WeatherListActivity extends AppCompatActivity implements CitiesAdap
 
     private void deliverResult(java.util.List listCity) {
         mLoadingView.hideLoadingIndicator();
-        Snackbar.make(coordLayout,"Обновлено городов: " + listCity.size(), Snackbar.LENGTH_LONG)
+        Snackbar.make(coordLayout,"Обновлено городов: " + listCity.size() + (restart ? " (restart)" : "(no restart)" ), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
-
+        restart = false;
 
     }
 
@@ -146,9 +147,13 @@ public class WeatherListActivity extends AppCompatActivity implements CitiesAdap
         mCityIds = mCityIds + cityId + ",";
 
         if(mCityIds.split(",").length == getInitialCities().size()) {
-
             LoaderManager.LoaderCallbacks<java.util.List> callbacks = new AllWeatherCallbacks();
-            getSupportLoaderManager().initLoader(R.id.allweather_loader_id, Bundle.EMPTY, callbacks);
+            if (restart) {
+
+                getSupportLoaderManager().restartLoader(R.id.allweather_loader_id, Bundle.EMPTY, callbacks);
+            } else {
+                getSupportLoaderManager().initLoader(R.id.allweather_loader_id, Bundle.EMPTY, callbacks);
+            }
         }
     }
 
