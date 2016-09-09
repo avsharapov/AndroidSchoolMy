@@ -58,15 +58,12 @@ public class WeatherListActivity extends AppCompatActivity implements CitiesAdap
         mRecyclerView.setAdapter(mAdapter);
         mLoadingView = LoadingDialog.view(getSupportFragmentManager());
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mCityIds = "";
                 restart = true;
                 updateWeather();
-            }
+
         });
         updateWeather();
 
