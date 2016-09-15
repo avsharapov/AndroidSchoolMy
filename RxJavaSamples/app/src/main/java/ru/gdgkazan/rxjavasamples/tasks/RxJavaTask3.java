@@ -21,8 +21,9 @@ public class RxJavaTask3 {
      */
     @NonNull
     public static Observable<Integer> sum(@NonNull Observable<Integer> observable) {
-        return observable.
-                .sum();
+
+        return observable.reduce(0, (a, b) -> a + b);
+
     }
 
 }

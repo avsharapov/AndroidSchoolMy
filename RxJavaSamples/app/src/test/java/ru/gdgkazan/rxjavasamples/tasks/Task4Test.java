@@ -38,7 +38,7 @@ public class Task4Test {
     @Test
     public void testSecondStream() throws Exception {
         Observable<Integer> observable = RxJavaTask4.task4(Observable.just(false),
-                Observable.just(1, 2, 8), Observable.just(5));
+                Observable.just(1, 2, 8), Observable.just(5, 1));
         testObservable(Observable.just(5), observable);
     }
 
