@@ -27,7 +27,11 @@ public class RxJavaTask5 {
     @NonNull
     public static Observable<Integer> gcdsObservable(@NonNull Observable<Integer> first,
                                                      @NonNull Observable<Integer> second) {
-        return Observable.just(0);
+        return Observable.zip(first,second, (a, b) -> {
+            BigInteger aa = BigInteger.valueOf(a);
+            BigInteger bb = BigInteger.valueOf(b);
+        return aa.gcd(bb).intValue();
+        });
     }
 
 }

@@ -23,8 +23,16 @@ public class RxJavaTask6 {
      * You code will be also tested for speed - you shouldn't recalculate result for each new subscriber.
      */
     @NonNull
-    public static Observable<BigInteger> task2Observable() {
-        throw new RuntimeException("Observable not implemented exception");
+    public static Observable<BigInteger> task6Observable() {
+
+        return Observable.range(1,100_000)
+                .map(x -> x*2)
+                .skip(40000)
+                .skipLast(40000)
+                .filter(x -> (x%3) == 0)
+                .map(BigInteger::valueOf)
+                .reduce(BigInteger::multiply);
+
     }
 
 }

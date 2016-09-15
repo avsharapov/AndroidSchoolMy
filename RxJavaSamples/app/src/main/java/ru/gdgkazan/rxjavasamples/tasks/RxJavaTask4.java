@@ -1,13 +1,8 @@
 package ru.gdgkazan.rxjavasamples.tasks;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import rx.Observable;
-import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.functions.Func3;
-import rx.functions.Func4;
 
 /**
  * @author Artur Vasilov
@@ -39,23 +34,21 @@ public class RxJavaTask4 {
     @NonNull
     public static Observable<Integer> task4(@NonNull Observable<Boolean> flagObservable,
                                             @NonNull Observable<Integer> first, @NonNull Observable<Integer> second) {
-        return Observable.just(flagObservable)
-                .first()
-                .map(b -> {
+        return flagObservable
+                .flatMap(b -> {
                     if(b)
-                    {
-                        return first;
-                    } else {
-                        return second;
-                    }
+                        {
+                            return first;
+                        } else {
+                            return second;
+                        }
                 })
                 .flatMap(integer -> {
                     if(integer < 99) {
                         return Observable.just(integer);
                     }else {
-                        return Observable.error(new Exception(""));
+                        return Observable.error(new Exception());
                     }
-
                 });
     }
 
