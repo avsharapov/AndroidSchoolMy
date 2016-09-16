@@ -10,5 +10,7 @@ import rx.Observable;
 public interface MoviesRepository {
 
     Observable<List<ru.gdgkazan.popularmoviesclean.domain.model.Movie>> popularMovies();
+    Observable<List<ru.gdgkazan.popularmoviesclean.domain.model.Review>> reviewsMovies();
+    Observable<List<ru.gdgkazan.popularmoviesclean.domain.model.Video>> videosMovies();
 
 }

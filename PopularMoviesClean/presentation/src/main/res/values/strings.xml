@@ -6,5 +6,6 @@
     <string name="movie_details">Movie details</string>
     <string name="rating">Rating \u2014 %1$s/%2$s</string>
     <string name="movie_title">%1$s \u2014 %2$s</string>
-
+    <string name="trailers_title">Трейлеры</string>
+    <string name="reviews_title">Отзывы</string>
 </resources>

@@ -38,6 +38,7 @@ public class MovieHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(@NonNull Movie movie) {
+
         Images.loadMovie(mImageView, movie, Images.WIDTH_185);
     }
 }

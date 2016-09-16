@@ -1,5 +1,7 @@
 package ru.gdgkazan.popularmoviesclean.data.model.content;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
@@ -14,6 +16,19 @@ public class Review extends RealmObject {
 
     @SerializedName("content")
     private String mContent;
+
+    public Review() {
+    }
+
+    public Review(String author, String content) {
+        mAuthor = author;
+        mContent = content;
+    }
+
+    public Review(Parcel in) {
+        mAuthor = in.readString();
+        mContent = in.readString();
+    }
 
     public String getAuthor() {
         return mAuthor;

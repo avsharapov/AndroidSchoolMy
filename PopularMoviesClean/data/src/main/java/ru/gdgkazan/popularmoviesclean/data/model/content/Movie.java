@@ -37,7 +37,9 @@ public class Movie extends RealmObject {
     public Movie(int id, String posterPath, String overview,
                  String title, String releasedDate, double voteAverage) {
         mId = id;
+
         mPosterPath = posterPath;
+
         mOverview = overview;
         mTitle = title;
         mReleasedDate = releasedDate;

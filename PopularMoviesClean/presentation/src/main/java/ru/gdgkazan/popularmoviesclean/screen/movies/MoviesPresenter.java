@@ -28,6 +28,7 @@ public class MoviesPresenter {
                 .doAfterTerminate(mMoviesView::hideLoadingIndicator)
                 .compose(mLifecycleHandler.load(R.id.movies_request_id))
                 .subscribe(mMoviesView::showMovies, throwable -> mMoviesView.showError());
+
     }
 }
 

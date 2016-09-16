@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.view.MenuItem;
@@ -28,7 +29,7 @@ import ru.gdgkazan.popularmoviesclean.domain.model.Review;
 import ru.gdgkazan.popularmoviesclean.domain.model.Video;
 import ru.gdgkazan.popularmoviesclean.utils.Images;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity implements VideosAdapter.OnItemClickListener, ReviewsAdapter.OnItemClickListener{
 
     private static final String MAXIMUM_RATING = "10";
 
@@ -52,6 +53,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.rating)
     TextView mRatingTextView;
+
+    @BindView(R.id.trailersTitle)
+    TextView mTrailersTitleTextView;
+
+    @BindView(R.id.reviewsTitle)
+    TextView mReviewsTitleTextView;
+
+    @BindView(R.id.TrailerListView)
+    RecyclerView mTrailersRecyclerView;
+
+    @BindView(R.id.ReviewListView)
+    RecyclerView mReviewsRecyclerView;
+
+    private VideosAdapter mVideoAdapter;
+    private ReviewsAdapter mReviewAdapter;
 
     public static void navigate(@NonNull AppCompatActivity activity, @NonNull View transitionImage,
                                 @NonNull Movie movie) {
@@ -79,6 +95,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
 
         Movie movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
+
         showMovie(movie);
 
         /**
@@ -115,6 +132,19 @@ public class MovieDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onItemClick(@NonNull View view, @NonNull Review review) {
+        //ImageView imageView = ButterKnife.findById(view, R.id.image);
+       // MovieDetailsActivity.navigate(this, imageView, review);
+    }
+
+    @Override
+    public void onItemClick(@NonNull View view, @NonNull Video video) {
+        //ImageView imageView = ButterKnife.findById(view, R.id.image);
+        //MovieDetailsActivity.navigate(this, imageView, movie);
+    }
+
+
     private void prepareWindowForAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Slide transition = new Slide();
@@ -143,11 +173,24 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void showTrailers(@NonNull List<Video> videos) {
-        // TODO : show trailers
+
+        mVideoAdapter = new VideosAdapter(this, videos);
+        mTrailersRecyclerView.setAdapter(mVideoAdapter);
+
+        mTrailersTitleTextView.setText(R.string.trailers_title);
+        mVideoAdapter.changeDataSet(videos);
+
+
     }
 
     private void showReviews(@NonNull List<Review> reviews) {
-        // TODO : show reviews
+
+        mReviewAdapter = new ReviewsAdapter(this, reviews);
+        mReviewsRecyclerView.setAdapter(mReviewAdapter);
+        mReviewsTitleTextView.setText(R.string.reviews_title);
+        mReviewAdapter.changeDataSet(reviews);
+
+
     }
 
 }

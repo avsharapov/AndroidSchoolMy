@@ -1,5 +1,7 @@
 package ru.gdgkazan.popularmoviesclean.data.model.content;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
@@ -14,6 +16,19 @@ public class Video extends RealmObject {
 
     @SerializedName("name")
     private String mName;
+
+    public Video() {
+    }
+
+    public Video(String key, String name) {
+        mKey = key;
+        mName = name;
+    }
+
+    public Video(Parcel in) {
+        mKey = in.readString();
+        mName = in.readString();
+    }
 
     public String getKey() {
         return mKey;
